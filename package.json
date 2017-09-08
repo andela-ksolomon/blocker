@@ -1,0 +1,57 @@
+{
+  "name": "blocker",
+  "version": "1.0.0",
+  "description": "A Full-stack Application that helps you find solution to problems relating to tech for andelans",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev-start": "nodemon --watch server --exec babel-node -- ./server/app.js",
+    "start": "babel-node -- server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andela-ksolomon/blocker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andela-ksolomon/blocker/issues"
+  },
+  "homepage": "https://github.com/andela-ksolomon/blocker#readme",
+  "dependencies": {
+    "axios": "^0.16.1",
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "body-parser": "^1.17.2",
+    "css-loader": "0.23.1",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.4",
+    "file-loader": "0.8.5",
+    "image-webpack-loader": "^3.3.0",
+    "jquery": "^2.2.3",
+    "log-with-colors": "^1.0.7",
+    "morgan": "^1.8.2",
+    "pg": "^6.1.5",
+    "pg-hstore": "^2.3.2",
+    "prop-types": "^15.5.10",
+    "react": "15.0.2",
+    "react-dom": "~15.0.2",
+    "react-redux": "4.4.5",
+    "react-router": "2.4.0",
+    "redux": "3.5.2",
+    "redux-immutable-state-invariant": "^1.2.3",
+    "redux-thunk": "2.0.1",
+    "sass-loader": "^6.0.3",
+    "sequelize": "^3.30.4",
+    "url-loader": "0.5.7",
+    "webpack": "2.4.1",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.19.1"
+  }
+}
