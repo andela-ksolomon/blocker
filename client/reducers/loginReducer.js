@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESSFUL } from '../actions/types';
+import { LOGIN_SUCCESSFUL, LOGIN_FAIL } from '../actions/types';
 
 const initialState = {
   isAuthenticated: true
@@ -9,6 +9,11 @@ export default (state = initialState, action = {}) => {
     case LOGIN_SUCCESSFUL:
       return {
         isAuthenticated: true
+      }
+    
+    case LOGIN_FAIL:
+      return {
+        isAuthenticated: false
       }
     default: return state;
   }

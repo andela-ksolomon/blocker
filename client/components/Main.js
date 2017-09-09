@@ -4,7 +4,6 @@ import NavBar from './NavBar';
 import Feeds from './Feeds';
 import Questions from './Questions';
 import Popular from './Popular';
-import AskQuestionModal from './AskQuestionModal'
 
 export default class Main extends Component {
   constructor() {
@@ -13,14 +12,6 @@ export default class Main extends Component {
     this.state = {
       view: { showModal: false }
     };
-  }
-
-  handleHideModal() {
-    this.setState({ view: { showModal: false } });
-  }
-  
-  handleShowModal() {
-    this.setState({ view: { showModal: true } });
   }
 
   render() {
@@ -41,8 +32,7 @@ export default class Main extends Component {
             </div>
           </div>
         </div>
-
-        {this.state.view.showModal ? <AskQuestionModal handleHideModal={this.handleHideModal}/> : null}
+        
       </div>
     );
   }

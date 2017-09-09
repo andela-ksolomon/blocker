@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import LoginActions from '../actions/loginActions';
+import { addFlashMessage } from '../actions/flashMessages';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -12,8 +14,10 @@ class NavBar extends React.Component {
       isLoading: false,
       view: { showModal: false }
     };
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+
+  this.onChange = this.onChange.bind(this);
+  this.onSubmit = this.onSubmit.bind(this);
+  this.logout = this.logout.bind(this);
   }
 
   onChange(event) {
@@ -25,6 +29,16 @@ class NavBar extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     this.props.login(this.state);
+    this.props.addFlashMessage({
+      type: 'success',
+      text: 'Login successful. Welcome!'
+    });
+  }
+
+  logout(event) {
+    event.preventDefault();
+    this.props.logout();
+    browserHistory.push('/');
   }
 
   render() {
@@ -84,6 +98,7 @@ class NavBar extends React.Component {
                           </li>
                       </ul>
                   </li>
+                  <li><button onClick={this.logout} id="login-btn" className="btn btn-outline-success my-2 my-sm-2" type="submit">Logout</button></li>
               </ul>
               </div>
             ) : 
@@ -130,8 +145,14 @@ const stateToProps = (state) => {
 
 const dispatchToProps = (dispatch) => {
   return {
+    addFlashMessage: (message) => {
+      return dispatch(addFlashMessage(message));
+    },
     login: (data) => {
       return dispatch(LoginActions.login(data));
+    },
+    logout: () => {
+      dispatch(LoginActions.logout());
     }
   };
 };
