@@ -1,3 +1,4 @@
+
 .blocker-img {
   height: 50px;
 }
@@ -10,6 +11,7 @@ body {
 #home {
   background: url('https://images.unsplash.com/photo-1468070454955-c5b6932bd08d?dpr=2&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=');
 }
+
 
 a,
 button {
@@ -163,11 +165,12 @@ body {
   font-size: 10px;
 }
 
-input[type="text"].form-control,
+/* input[type="text"].form-control,
 input[type="search"].form-control {
   border: none;
   border-bottom: 1px dotted #CFCFCF;
-}
+} */
+
 
 textarea {
   border: 1px dotted #CFCFCF!important;

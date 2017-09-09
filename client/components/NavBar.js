@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import LoginActions from '../actions/loginActions';
+import AuthenticationActions from '../actions/loginActions';
 import { addFlashMessage } from '../actions/flashMessages';
+import LoginForm from './presentation/LoginForm';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -28,11 +29,22 @@ class NavBar extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    this.props.login(this.state);
-    this.props.addFlashMessage({
-      type: 'success',
-      text: 'Login successful. Welcome!'
-    });
+    this.props.login(this.state)
+      .then((response) => {
+        if (response.confirmation === 'fail') {
+          this.props.addFlashMessage({
+            type: 'error',
+            text: response.message
+          });
+        } else {
+          this.props.addFlashMessage({
+            type: 'success',
+            text: 'Login successful. Welcome!'
+          });
+          browserHistory.push('/main');
+        }
+        
+      });
   }
 
   logout(event) {
@@ -87,9 +99,9 @@ class NavBar extends React.Component {
                       <ul className="dropdown-menu">
                           <li>
                               <div className="navbar-content">
-                                  <span>JS Krishna</span>
+                                  <span>{this.props.currentUser.user.username}</span>
                                   <p className="text-muted small">
-                                      me@jskrishna.com
+                                    {this.props.currentUser.user.email}
                                   </p>
                                   <div className="divider">
                                   </div>
@@ -103,32 +115,12 @@ class NavBar extends React.Component {
               </div>
             ) : 
             (
-              <form
+              <LoginForm
                 onSubmit={this.onSubmit}
-                className="form-inline my-2 my-lg-0"
-              >
-                <input
-                  onChange={this.onChange}
-                  value={this.state.username}
-                  name="username"
-                  className="form-control mr-sm-2"
-                  type="text"
-                  placeholder="Username"
-                  aria-label="Username"
-                  required
-                />
-                <input
-                  onChange={this.onChange}
-                  value={this.state.password}
-                  name="password"
-                  className="form-control mr-sm-2"
-                  type="password"
-                  placeholder="Password"
-                  aria-label="Password"
-                  required
-                />
-                <button id="login-btn" className="btn btn-outline-success my-2 my-sm-2" type="submit">Login</button>
-              </form>
+                onChange={this.onChange}
+                usernameValue={this.state.username}
+                passwordValue={this.state.password}
+              />
             )
           }
         </div>
@@ -140,6 +132,7 @@ class NavBar extends React.Component {
 const stateToProps = (state) => {
   return {
     authenticated: state.loginReducer.isAuthenticated,
+    currentUser: state.loginReducer.user,
   };
 };
 
@@ -149,10 +142,10 @@ const dispatchToProps = (dispatch) => {
       return dispatch(addFlashMessage(message));
     },
     login: (data) => {
-      return dispatch(LoginActions.login(data));
+      return dispatch(AuthenticationActions.login(data));
     },
     logout: () => {
-      dispatch(LoginActions.logout());
+      dispatch(AuthenticationActions.logout());
     }
   };
 };

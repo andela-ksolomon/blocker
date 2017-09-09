@@ -29,7 +29,7 @@ const Authenticate = {
         email: {
           notEmpty: true,
           isEmail: {
-            errorMessage: 'Provide a valid a Email Address'
+            errorMessage: 'Provide a valid Email Address'
           },
           errorMessage: 'Your Email Address is required'
         },
@@ -73,28 +73,22 @@ const Authenticate = {
       }
   )
   .then((user) => {
-    if (user) {
-      if (user.dataValues.username === req.body.username) {
+      if (user && (user.username === req.body.username || user.email === req.body.email)) {
+        let message;
+        if (user.email === req.body.email) {
+          message = 'Email Address already exist'
+        } else {
+          message = 'Username already exist';
+        }
         return res.status(409)
         .send(
           {
             success: false,
-            message: 'Username already exist'
+            message
           }
         );
       }
-      if (user.dataValues.email === req.body.email) {
-        return res.status(409)
-      .send(
-          {
-            success: false,
-            message: 'Email Address already exist'
-          }
-      );
-      }
-    } else {
       next();
-    }
   });
   },
   /**
@@ -105,6 +99,7 @@ const Authenticate = {
    * @return {void} no return or void
    */
   authenticate(req, res, next) {
+    console.log(req.body.password, ' ea 1')
     if (!req.body.username || !req.body.password) {
       return res.status(400)
         .json({
@@ -119,8 +114,6 @@ const Authenticate = {
         }
       })
       .then((user) => {
-        console.log(user.password);
-        console.log(req.body.password);
         if (user &&
           bcrypt.compareSync(req.body.password, user.password)) {
           next();
@@ -131,6 +124,13 @@ const Authenticate = {
               message: 'Invalid Credentials.'
             });
         }
+      })
+      .catch((error) => {
+        return res.status(404)
+        .json({
+          success: false,
+          message: 'Username does not exist'
+        });
       });
   },
   /**
