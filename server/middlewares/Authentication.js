@@ -33,7 +33,7 @@ const Authenticate = {
           },
           errorMessage: 'Your Email Address is required'
         },
-        fullName: {
+        fullname: {
           notEmpty: true,
           errorMessage: 'Your Fullname is required'
         },
@@ -58,7 +58,7 @@ const Authenticate = {
     const password = bcrypt.hashSync(req.body.password, 10);
     req.userData = {
       username: req.body.username,
-      fullName: req.body.firstname,
+      fullname: req.body.fullname,
       email: req.body.email,
       password,
     };
