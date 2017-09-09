@@ -9,10 +9,6 @@ import FlashMessagesList from './FlashMessagesList';
 export default class Main extends Component {
   constructor() {
     super();
-
-    this.state = {
-      view: { showModal: false }
-    };
   }
 
   render() {

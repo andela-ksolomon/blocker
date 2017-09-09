@@ -5,7 +5,6 @@ import { Router, browserHistory } from 'react-router';
 import jwtDecode from 'jwt-decode';
 import './public/css/main.css';
 import './public/css/threads.css';
-import main from './public/main.css';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import AuthenticationActions from './actions/loginActions';
 

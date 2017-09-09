@@ -43,6 +43,7 @@
     "lodash": "^4.17.4",
     "log-with-colors": "^1.0.7",
     "morgan": "^1.8.2",
+    "node-sass": "^4.5.3",
     "omit": "^1.0.1",
     "pg": "^6.4.2",
     "pg-hstore": "^2.3.2",

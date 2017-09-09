@@ -15,7 +15,8 @@ module.exports = {
     hot: true
   },
   externals: {
-    Materialize: 'Materialize'
+    Materialize: 'Materialize',
+    jquery: 'jQuery'
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),

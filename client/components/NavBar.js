@@ -13,7 +13,6 @@ class NavBar extends React.Component {
       password: '',
       errors: {},
       isLoading: false,
-      view: { showModal: false }
     };
 
   this.onChange = this.onChange.bind(this);

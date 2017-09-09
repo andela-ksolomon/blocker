@@ -5,7 +5,7 @@ const SignupForm = ({
   errors, onSubmit, onChange, fullnameValue, usernameValue, emailValue, passwordValue
 }) => {
   return (
-    <div className="col-sm-4 ">
+    <div className="col-sm-4">
       <div className="card my-signup">
         <h4 className="card-header text-center">Create An Account</h4>
         <div className="card-body">
