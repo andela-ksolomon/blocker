@@ -1,4 +1,8 @@
 
+.blocker-img {
+  height: 50px;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   /* font-family: 'Cinzel', serif; */
@@ -8,10 +12,36 @@ body {
   background: url('https://images.unsplash.com/photo-1468070454955-c5b6932bd08d?dpr=2&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=');
 }
 
+
+a,
+button {
+  cursor: pointer;
+}
+
+#signup-btn,
+#login-btn {
+  background-color: #f5922b;
+  border-color: #ccc;
+  border-radius: 10px;
+  font-size: 17px;
+}
+
+#signup-btn:hover,
+#login-btn:hover {
+  background-color: #355ed6;
+  border-color: #ccc;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
 #login-btn {
   color: #fff;
   font-size: 15px;
   border-radius: 0px;
+}
+
+.my-nav {
+  background-color: #355ed6 !important;
 }
 
 .background-img {
@@ -21,6 +51,20 @@ body {
 
 .my-signup {
   margin-top: 50px;
+}
+
+.blocker-div {
+  margin-top: 100px;
+  height: 100px;
+  opacity: 0.7;
+}
+
+.signup-input {
+  margin-bottom: 20px;
+}
+
+.firstname {
+  margin-right: 15px;
 }
 
 .section1,
@@ -126,6 +170,7 @@ input[type="search"].form-control {
   border: none;
   border-bottom: 1px dotted #CFCFCF;
 } */
+
 
 textarea {
   border: 1px dotted #CFCFCF!important;
