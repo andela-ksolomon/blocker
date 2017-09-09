@@ -1,8 +1,8 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
-import NavBar from './NavBar';
 import LoginActions from '../actions/loginActions';
 import { addFlashMessage } from '../actions/flashMessages';
 import FlashMessagesList from './FlashMessagesList';
@@ -41,8 +41,7 @@ class Home extends React.Component {
 
   render() {
     return(
-      <div className="background-img">
-        <NavBar />
+      <div className="background-img" id="home">
         <div className="col-sm-5 justify-content-center my-flash">
           <FlashMessagesList />
         </div>
@@ -109,6 +108,7 @@ class Home extends React.Component {
                       aria-label="Password"
                       required
                     />
+                    
                     <button className="btn btn-primary col-sm-10" id="signup-btn" type="submit">Signup</button>
                   </form>
                 </div>
@@ -116,10 +116,12 @@ class Home extends React.Component {
             </div>
           </div>
         </div>
+
       </div>
     );
   }
 }
+
 
 const dispatchToProps = (dispatch) => {
   return {

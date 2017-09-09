@@ -1,7 +1,7 @@
 import { LOGIN_SUCCESSFUL, LOGIN_FAIL } from '../actions/types';
 
 const initialState = {
-  isAuthenticated: false
+  isAuthenticated: true
 };
 export default (state = initialState, action = {}) => {
   const updated = Object.assign({}, state);
