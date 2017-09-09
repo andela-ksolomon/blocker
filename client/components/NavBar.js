@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import LoginActions from '../actions/loginActions';
+import { addFlashMessage } from '../actions/flashMessages';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -13,6 +15,7 @@ class NavBar extends React.Component {
     };
   this.onChange = this.onChange.bind(this);
   this.onSubmit = this.onSubmit.bind(this);
+  this.logout = this.logout.bind(this);
   }
 
   onChange(event) {
@@ -24,10 +27,19 @@ class NavBar extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     this.props.login(this.state);
+    this.props.addFlashMessage({
+      type: 'success',
+      text: 'Login successful. Welcome!'
+    });
+  }
+
+  logout(event) {
+    event.preventDefault();
+    this.props.logout();
+    browserHistory.push('/');
   }
 
   render() {
-    console.log(this.props)
     return(
       <nav className="navbar navbar-expand-lg navbar-light my-nav">
         <img className="blocker-img" src="https://www.freelogoservices.com/api/main/images/1j+ojVVCOMkX9Wyrexe4hGe...0vSNuksWzBPO1T5vbjRI9At61X50x7c++Pw+KhkJ4FEDhRY=" />
@@ -43,7 +55,7 @@ class NavBar extends React.Component {
           </ul>
           { (this.props.authenticated) ? 
             (
-              <a className="nav-link" href="#">LogOut</a>
+              <button onClick={this.logout} id="login-btn" className="btn btn-outline-success my-2 my-sm-2" type="submit">Logout</button>
             ) : 
             (
               <form
@@ -88,8 +100,14 @@ const stateToProps = (state) => {
 
 const dispatchToProps = (dispatch) => {
   return {
+    addFlashMessage: (message) => {
+      return dispatch(addFlashMessage(message));
+    },
     login: (data) => {
       return dispatch(LoginActions.login(data));
+    },
+    logout: () => {
+      dispatch(LoginActions.logout());
     }
   };
 };
