@@ -1,18 +1,18 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var Answer = sequelize.define('Answer', {
-    posterId: {
-      type: DataTypes.INTEGER,
-      allowNull: {
-        args: false,
-        msg: 'Poster cannot be empty'
-      },
-    },
     questionId: {
       type: DataTypes.INTEGER,
       allowNull: {
         args: false,
         msg: 'Answer should belong to a question'
+      },
+    },
+    UserId: {
+      type: DataTypes.INTEGER,
+      allowNull: {
+        args: false,
+        msg: 'Answer should be posted by a user'
       },
     },
     content: {
@@ -27,11 +27,11 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
         Answer.belongsTo(models.User, {
-          foreighKey: 'posterId',
+          foreighKey: 'UserId',
           onDelete: 'CASCADE'
         });
         Answer.hasMany(models.Vote, {
-          foreignKey: 'answerId',
+          foreignKey: 'id',
           onDelete: 'CASCADE',
         });
       }

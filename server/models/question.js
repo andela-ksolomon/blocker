@@ -47,7 +47,10 @@ module.exports = function(sequelize, DataTypes) {
           onDelete: 'CASCADE',
         });
         Question.belongsToMany(models.Skill, {
-          through: 'QuestionSkill'
+          through: models.QuestionSkill
+        });
+        Question.hasMany(models.Answer, {
+          foreignKey: 'UserId'
         });
       }
     }
