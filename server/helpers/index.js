@@ -71,7 +71,7 @@ export default {
           'username',
           'fullname',
           'email',
-          'points'
+          'points',
         ]
       }
     ];

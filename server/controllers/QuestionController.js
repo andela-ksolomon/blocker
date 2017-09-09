@@ -56,7 +56,21 @@ export default {
               message: 'Question should be an integer'
             });
           }
-        db.Question.findById(id)
+        db.Question.findOne({
+          where: {
+            id
+          },
+          include: [{
+            model: db.User,
+            attributes: [
+              'id',
+              'username',
+              'fullname',
+              'email',
+              'points'
+            ]
+          }]
+        })
         .then((question) => {
             if (!question) {
                 return response.status(404)
@@ -67,10 +81,15 @@ export default {
                   }
                 );
               }
-            return response.status(200)
-            .send(
-              {
-                question
+              question.getAnswers()
+              .then((answer) => {
+                const allAnswers = answer;
+                return response.status(200)
+                .send(
+                  {
+                    question,
+                    allAnswers
+                  });
               });
         })
         .catch((error) => response.status(400).send({

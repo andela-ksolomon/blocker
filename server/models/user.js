@@ -66,8 +66,11 @@ module.exports = function(sequelize, DataTypes) {
         User.hasMany(models.Vote, {
           foreignKey: 'userId'
         });
+        User.hasMany(models.Answer, {
+          foreignKey: 'UserId'
+        });
         User.belongsToMany(models.Skill, {
-          through: 'UserSkill'
+          through: models.UserSkill
         });
       }
     }

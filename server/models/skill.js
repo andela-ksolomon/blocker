@@ -13,10 +13,10 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
         Skill.belongsToMany(models.User, {
-          through: 'UserSkill'
+          through: models.UserSkill
         });
         Skill.belongsToMany(models.Question, {
-          through: 'QuestionSkill'
+          through: models.QuestionSkill
         });
       }
     }
