@@ -34,7 +34,7 @@
     "express": "^4.15.4",
     "file-loader": "0.8.5",
     "image-webpack-loader": "^3.3.0",
-    "jquery": "^2.2.3",
+    "jquery": "^3.2.1",
     "log-with-colors": "^1.0.7",
     "morgan": "^1.8.2",
     "node-sass": "^4.5.3",
