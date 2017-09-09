@@ -13,7 +13,7 @@ import BodyParser from 'body-parser';
 const app = express(),
   compiler = webpack(webpackConfig);
 
-app.use(express.static(path.join(__dirname, '../../')));
+app.use(express.static(path.join(__dirname, '../client/public')));
 
 app.use(webpackMiddleware(compiler));
 

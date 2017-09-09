@@ -60,7 +60,7 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loaders: ['file-loader?name=/assets/img/[name].[ext]', {
+        loaders: ['file-loader?name=/public/images/[name].[ext]', {
           loader: 'image-webpack-loader',
           query: {
             mozjpeg: {
