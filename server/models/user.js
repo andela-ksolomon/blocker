@@ -48,7 +48,14 @@ module.exports = function(sequelize, DataTypes) {
         }
       }
     },
-    points: DataTypes.INTEGER
+    points: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
   }, {
     classMethods: {
       associate: function(models) {

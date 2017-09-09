@@ -5,6 +5,7 @@ import path from 'path';
 import http from 'http';
 import dotenv from 'dotenv';
 import BodyParser from 'body-parser';
+import validator from 'express-validator';
 import log from 'log-with-colors';
 import webpackHotMidlleware from 'webpack-hot-middleware';
 import webpackMiddleware from 'webpack-dev-middleware';
@@ -15,12 +16,13 @@ import QuestionRouter from './routes/QuestionRoutes';
 import AnswerRouter from './routes/AnswerRoutes';
 import VoteRouter from './routes/VotesRoutes';
 
+const app = express(),
+compiler = webpack(webpackConfig);
+
 dotenv.load();
 const port = parseInt(process.env.PORT, 10) || 8000;
 
 const server = http.createServer(app);
-const app = express(),
-  compiler = webpack(webpackConfig);
 
 app.set('port', port);
 app.use(express.static(path.join(__dirname, '../../')));
@@ -37,7 +39,17 @@ app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({
   extended: false
 }));
-
+app.use(validator());
+app.use(validator({
+  customValidators: {
+    isUsername: (value) => {
+      return value.length >= 5;
+    }
+  }
+}));
+app.get('/any', (req, res) => {
+  res.send('any string');
+})
 app.use('/api/v1/users', UserRouter);
 app.use('/api/v1/questions', QuestionRouter);
 app.use('/api/v1/answers', AnswerRouter);
