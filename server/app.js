@@ -15,13 +15,8 @@ import QuestionRouter from './routes/QuestionRoutes';
 import AnswerRouter from './routes/AnswerRoutes';
 import VoteRouter from './routes/VotesRoutes';
 
-dotenv.load();
-const port = parseInt(process.env.PORT, 10) || 8000;
-app.set('port', port);
-
-const server = http.createServer(app);
 const app = express(),
-  compiler = webpack(webpackConfig);
+compiler = webpack(webpackConfig);
 
 app.use(express.static(path.join(__dirname, '../../')));
 
@@ -38,10 +33,15 @@ app.use(BodyParser.urlencoded({
   extended: false
 }));
 
-app.use('/users', UserRouter);
-app.use('/questions', QuestionRouter);
-app.use('/answers', AnswerRouter);
-app.use('/votes', VoteRouter);
+dotenv.load();
+const port = parseInt(process.env.PORT, 10) || 8000;
+
+const server = http.createServer(app);
+
+app.use('/api/v1/users', UserRouter);
+app.use('/api/v1/questions', QuestionRouter);
+app.use('/api/v1/answers', AnswerRouter);
+app.use('/api/v1/votes', VoteRouter);
 
 app.use(logger('dev'));
 
