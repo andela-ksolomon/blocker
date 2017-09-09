@@ -34,6 +34,7 @@ export default {
         }));
     },
     create(request, response) {
+        request.body.authorId = request.decoded.user.id
         db.Question.create(request.body)
          .then((question) => {
             response.status(200)
@@ -51,15 +52,14 @@ export default {
     fetchOne(request, response) {
         const { id } = request.params
         if (isNaN(id)) {
-            return res.status(400).send({
+            return response.status(400).send({
               message: 'Question should be an integer'
             });
           }
         db.Question.findById(id)
         .then((question) => {
-            console.log(question)
             if (!question) {
-                return res.status(404)
+                return response.status(404)
                 .send(
                   {
                     success: false,
@@ -73,22 +73,22 @@ export default {
                 question
               });
         })
-        .catch((error) => res.status(400).send({
+        .catch((error) => response.status(400).send({
             error,
             message: 'Error occurred while retrieving documents'
           }))
     },
     delete(request, response) {
-        const { id } = request.params.id;
-        db.findById(id)
+        const { id } = request.params;
+        db.Question.findById(id)
         .then((question) => {
             if(!question) {
-                return res.status(404).send({
+                return response.status(404).send({
                     message: 'Question not found'
                   });
             }
-            if(req.decoded.id !== question.authorId) {
-                return res.status(403).send({
+            if(request.decoded.user.id !== question.authorId) {
+                return response.status(403).send({
                     message: 'You are not allow to delete this document'
                   });
             }
@@ -98,41 +98,41 @@ export default {
                     id
                   }
                 })
-                .then(() => res.status(200)
+                .then(() => response.status(200)
                 .send(
                 {
                   message: 'Question was deleted successfully'
                 }
                 ));
         })
-        .catch((error) => res.status(400).send({
+        .catch((error) => response.status(400).send({
             error,
             message: 'Error occurred while deleting documents'
           }))
     },
     edit(request, response) {
-        const { id } = request.params.id;
-        db.findById(id)
+        const { id } = request.params;
+        db.Question.findById(id)
         .then((question) => {
             if(!question) {
-                return res.status(404).send({
+                return response.status(404).send({
                     message: 'Question not found'
                   });
             }
-            if(req.decoded.id !== question.authorId) {
-                return res.status(403).send({
+            if(request.decoded.user.id !== question.authorId) {
+                return response.status(403).send({
                     message: 'You are not allow to delete this document'
                   });
             }
             question.update(request.body)
-                .then(() => res.status(200)
+                .then(() => response.status(200)
                 .send(
                 {
                   message: 'Question was updated successfully'
                 }
                 ));
         })
-        .catch((error) => res.status(400).send({
+        .catch((error) => response.status(400).send({
             error,
             message: 'Error occurred while deleting documents'
           }))
@@ -153,18 +153,18 @@ export default {
       'createdAt',
       'updatedAt'
     ];
-    db.Document
+    db.Question
       .findAndCountAll(req.searchFilter)
-      .then((documents) => {
+      .then((questions) => {
         const condition = {
-          count: documents.count,
+          count: questions.count,
           limit: req.searchFilter.limit,
           offset: req.searchFilter.offset
         };
-        delete documents.count;
+        delete questions.count;
         const pagination = Helpers.pagination(condition);
         let message;
-        if (documents.rows.length === 0) {
+        if (questions.rows.length === 0) {
           message = 'Document not Found';
         } else {
           message = 'Your search was successful';
@@ -172,7 +172,7 @@ export default {
         res.status(200)
           .send({
             message,
-            documents,
+            questions,
             pagination
           });
       });

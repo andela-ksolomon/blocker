@@ -6,9 +6,10 @@ import Helpers from '../helpers';
 const UserController = {
   create(req, res) {
     const password = Helpers.passwordHash(req.body.password);
+    console.log(req.body);
     return User.create({
         password,
-        fullName: req.body.fullName,
+        fullname: req.body.fullname,
         username: req.body.username,
         email: req.body.email,
       })
@@ -37,7 +38,7 @@ const UserController = {
       user
       .update(
         {
-          active: true,
+          isActive: true,
         }).then((result) => {
           const token = Helpers.createToken(result);
           const filteredData = omit(result.dataValues, [
