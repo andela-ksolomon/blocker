@@ -5,7 +5,9 @@ import path from 'path';
 import http from 'http';
 import dotenv from 'dotenv';
 import BodyParser from 'body-parser';
+
 import validator from 'express-validator';
+
 import log from 'log-with-colors';
 import webpackHotMidlleware from 'webpack-hot-middleware';
 import webpackMiddleware from 'webpack-dev-middleware';
@@ -19,12 +21,6 @@ import VoteRouter from './routes/VotesRoutes';
 const app = express(),
 compiler = webpack(webpackConfig);
 
-dotenv.load();
-const port = parseInt(process.env.PORT, 10) || 8000;
-
-const server = http.createServer(app);
-
-app.set('port', port);
 app.use(express.static(path.join(__dirname, '../../')));
 
 app.use(webpackMiddleware(compiler));
@@ -50,6 +46,18 @@ app.use(validator({
 app.get('/any', (req, res) => {
   res.send('any string');
 })
+app.use('/api/v1/users', UserRouter);
+app.use('/api/v1/questions', QuestionRouter);
+app.use('/api/v1/answers', AnswerRouter);
+app.use('/api/v1/votes', VoteRouter);
+
+app.use(logger('dev'));
+
+dotenv.load();
+const port = parseInt(process.env.PORT, 10) || 8000;
+
+const server = http.createServer(app);
+
 app.use('/api/v1/users', UserRouter);
 app.use('/api/v1/questions', QuestionRouter);
 app.use('/api/v1/answers', AnswerRouter);

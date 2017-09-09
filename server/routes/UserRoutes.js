@@ -2,9 +2,11 @@ import express from 'express';
 import UserController from '../controllers/UserController';
 import Authenticate from '../middlewares/Authentication';
 
+
 const app = express.Router();
 
 //start logic
+
 //end logic
 app.route('/')
 .post(Authenticate.validateInput, UserController.create);
