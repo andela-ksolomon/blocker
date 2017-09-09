@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import NavBar from './NavBar';
-import LoginActions from '../actions/loginActions';
+import AuthenticationActions from '../actions/loginActions';
 import { addFlashMessage } from '../actions/flashMessages';
 import FlashMessagesList from './FlashMessagesList';
 
@@ -11,12 +11,12 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: '',
-      lastname: '',
+      fullname: '',
       username: '',
       email: '',
       password: '',
-      errors: {},
+      errors: '',
+      errorStatus: false,
       isLoading: false
     };
   this.onChange = this.onChange.bind(this);
@@ -31,15 +31,24 @@ class Home extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    this.props.signup(this.state);
-    this.props.addFlashMessage({
-      type: 'success',
-      text: 'You signed up successfully. Welcome!'
-    });
-    browserHistory.push('/main');
+    this.props.signup(this.state)
+      .then((response) => {
+        if (response.confirmation === 'fail') {
+          this.setState({
+            errors: response.message
+          });
+        } else {
+          this.props.addFlashMessage({
+            type: 'success',
+            text: 'You signed up successfully. Welcome!'
+          });
+          browserHistory.push('/main');
+        }
+      });
   }
 
   render() {
+    const { errors } = this.state;
     return(
       <div className="background-img">
         <NavBar />
@@ -49,34 +58,25 @@ class Home extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-8">
-                <h1 className="text-white vertical-align">Welcome</h1>
+              <h1 className="text-white vertical-align">Welcome</h1>
             </div>
             <div className="col-sm-4 ">
               <div className="card my-signup">
                 <h4 className="card-header text-center">Create An Account</h4>
                 <div className="card-body">
+                  {errors && <div className="text-danger">{errors}</div>}
                   <form
                     onSubmit={this.onSubmit}
                     className="form-inline my-2 my-lg-2 justify-content-center align-items-center"
                   >
                     <input
                       onChange={this.onChange}
-                      value={this.state.firstname}
-                      name="firstname"
+                      value={this.state.fullname}
+                      name="fullname"
                       className="form-control col-sm-10 signup-input"
                       type="text"
-                      placeholder="First Name"
-                      aria-label="First Name"
-                      required
-                    />
-                    <input
-                      onChange={this.onChange}
-                      value={this.state.lastname}
-                      name="lastname"
-                      className="form-control col-sm-10 signup-input"
-                      type="text"
-                      placeholder="Last Name"
-                      aria-label="Last Name"
+                      placeholder="Full Name"
+                      aria-label="Full Name"
                       required
                     />
                     <input
@@ -124,7 +124,7 @@ class Home extends React.Component {
 const dispatchToProps = (dispatch) => {
   return {
     signup: (data) => {
-      return dispatch(LoginActions.signup(data));
+      return dispatch(AuthenticationActions.signup(data));
     },
     addFlashMessage: (message) => {
       return dispatch(addFlashMessage(message));

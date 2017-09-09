@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import LoginActions from '../actions/loginActions';
+import AuthenticationActions from '../actions/loginActions';
 import { addFlashMessage } from '../actions/flashMessages';
 
 class NavBar extends React.Component {
@@ -26,11 +26,22 @@ class NavBar extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    this.props.login(this.state);
-    this.props.addFlashMessage({
-      type: 'success',
-      text: 'Login successful. Welcome!'
-    });
+    this.props.login(this.state)
+      .then((response) => {
+        if (response.confirmation === 'fail') {
+          this.props.addFlashMessage({
+            type: 'error',
+            text: response.message
+          });
+        } else {
+          this.props.addFlashMessage({
+            type: 'success',
+            text: 'Login successful. Welcome!'
+          });
+          // browserHistory.push('/main');
+        }
+        
+      });
   }
 
   logout(event) {
@@ -104,10 +115,10 @@ const dispatchToProps = (dispatch) => {
       return dispatch(addFlashMessage(message));
     },
     login: (data) => {
-      return dispatch(LoginActions.login(data));
+      return dispatch(AuthenticationActions.login(data));
     },
     logout: () => {
-      dispatch(LoginActions.logout());
+      dispatch(AuthenticationActions.logout());
     }
   };
 };
