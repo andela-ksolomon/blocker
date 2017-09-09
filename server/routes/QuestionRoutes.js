@@ -4,7 +4,6 @@ import QuestionController from '../controllers/QuestionController';
 
 const app = express.Router();
 
-//start logic
 app.route('/')
     .get(QuestionController.fetchAll)
     .post(Questions.validate, QuestionController.create);

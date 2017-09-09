@@ -5,6 +5,9 @@ import path from 'path';
 import http from 'http';
 import dotenv from 'dotenv';
 import BodyParser from 'body-parser';
+
+import validator from 'express-validator';
+
 import log from 'log-with-colors';
 import webpackHotMidlleware from 'webpack-hot-middleware';
 import webpackMiddleware from 'webpack-dev-middleware';
@@ -32,6 +35,23 @@ app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({
   extended: false
 }));
+app.use(validator());
+app.use(validator({
+  customValidators: {
+    isUsername: (value) => {
+      return value.length >= 5;
+    }
+  }
+}));
+app.get('/any', (req, res) => {
+  res.send('any string');
+})
+app.use('/api/v1/users', UserRouter);
+app.use('/api/v1/questions', QuestionRouter);
+app.use('/api/v1/answers', AnswerRouter);
+app.use('/api/v1/votes', VoteRouter);
+
+app.use(logger('dev'));
 
 dotenv.load();
 const port = parseInt(process.env.PORT, 10) || 8000;
