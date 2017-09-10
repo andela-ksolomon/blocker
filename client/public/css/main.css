@@ -45,11 +45,27 @@ button {
 
 .background-img {
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.52);
+  background-color: rgba(0, 0, 0, 0.55);
+}
+
+.welcome {
+  margin-top: 50px;
+  padding: 0px 50px;
+  line-height: 200%;
+  font-family: 'Lobster', cursive;
+  text-shadow: 1px 1px 2px #f5922b;
+}
+.welcome > h1 {
+  font-size: 70px;
+  
+}
+.welcome > h2 {
+  font-size: 40px;
 }
 
 .my-signup {
   margin-top: 50px;
+  margin-right: 40px;
 }
 
 .blocker-div {
