@@ -57,14 +57,19 @@ class Home extends React.Component {
   render() {
     const { errors } = this.state;
     return(
-      <div className="background-img" id="home">
+      <div id="home">
+        <div className="background-img">
         <div className="col-sm-5 justify-content-center">
           <FlashMessagesList />
         </div>
         <div className="container">
           <div className="row">
             <div className="col-sm-8">
-                <h1 className="text-white vertical-align">Welcome</h1>
+              <div className="text-white text-center welcome">
+                <h1>Welcome to Blocka</h1>
+                <h2>Learn, Resolve blockers and Build awesome things faster, the Andela way</h2>
+                
+                </div>
             </div>
             { (this.props.authenticated) ?
               (<div />) :
@@ -83,7 +88,7 @@ class Home extends React.Component {
             
           </div>
         </div>
-
+        </div>
       </div>
     );
   }

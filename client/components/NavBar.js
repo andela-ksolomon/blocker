@@ -122,13 +122,12 @@ class NavBar extends React.Component {
       <div>
       <nav className="navbar navbar-expand-lg navbar-light my-nav">
         <img className="blocker-img" src="https://www.freelogoservices.com/api/main/images/1j+ojVVCOMkX9Wyrexe4hGe...0vSNuksWzBPO1T5vbjRI9At61X50x7c++Pw+KhkJ4FEDhRY=" />
-        <a className="navbar-brand my-brand" href="#">Blocker</a>
+        <a className="navbar-brand my-brand" href="/main">Blocka</a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon" />
         </button>
         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul className="navbar-nav mr-auto">
-            
           </ul>
           { (this.props.authenticated) ? 
             (
