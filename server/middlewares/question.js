@@ -1,6 +1,7 @@
 
 export default {
     validate(request, response, next) {
+        request.body.body = request.body.content;
         const { title, body } = request.body;
         if(!title || title.length < 5) {
             return response.status(401)

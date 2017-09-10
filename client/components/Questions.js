@@ -1,8 +1,25 @@
 import React from 'react';
+import Modal from './Modal';
+import { connect } from 'react-redux';
+import { getFirstLetter, getDate } from '../utils/helpers';
 
 class Questions extends React.Component {
-
+    constructor(props) {
+        super(props);
+    
+        this.state = { isOpen: false };
+      }
+    
+      toggleModal = () => {
+        this.setState({
+          isOpen: !this.state.isOpen
+        });
+      }    
   render() {
+      const {
+          questions
+      } = this.props;
+      console.log(questions);
     return (
     <div className="tab-content">
       <div className="tab-pane active" id="inbox">
@@ -13,24 +30,39 @@ class Questions extends React.Component {
                       <input type="search" placeholder="Search Questions" className="form-control mail-search" />
                       
                       <ul className="mail-list">
-                          <li>
+                          {questions.map((question) => <li>
                               <a href="">
-                                <span className="mail-sender">How to debug webpack</span>
-                                <span className="mail-subject">@codejockie . 19 minutes ago</span>
-                                <span className="mail-message-preview">You have ten more subscriptions click her...</span>
+                                <span className="mail-sender">{question.title}</span>
+                                <span className="mail-subject">{getDate(question.createdAt)}</span>
+                                <span className="mail-message-preview">{question.content}</span>
                             <hr/>
                                 <span className="mail-subject">0 Answer | 10 upvotes | 12 downvotes</span>
                               </a>
-                          </li>
+                          </li>)}
                       </ul>
                   </div>
               </div>
           </div>
           
       </div>
-      
+      <Modal show={this.state.isOpen}
+          onClose={this.toggleModal}>
+          <h1>Here's some content for the modal</h1>
+        </Modal>
     </div> 
     );
   }
 }
-export default Questions;
+const stateToProps = (state) => {
+    return {
+      questions: state.questions,
+    };
+  };
+const dispatchToProps = (dispatch) => {
+    return {
+      fetch: (data) => {
+        return dispatch(fetchData());
+      }
+    };
+  };
+export default connect(stateToProps, dispatchToProps)(Questions);

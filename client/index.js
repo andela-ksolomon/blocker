@@ -1,14 +1,15 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, browserHistory } from 'react-router';
+import '../node_modules/jquery/dist/jquery';
+import { browserHistory } from 'react-router';
 import jwtDecode from 'jwt-decode';
 import './public/css/main.css';
 import './public/css/threads.css';
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import AuthenticationActions from './actions/loginActions';
 
-import routes from './routes';
+import Routes from './routes';
 import ConfigureStore from './store/ConfigureStore';
 
 const store = ConfigureStore();
@@ -19,5 +20,6 @@ if (localStorage.jwtToken) {
 }
 
 render(<Provider store={store}>
-    <Router history={browserHistory} routes={routes} />
+    <Routes history={browserHistory} getState={store.getState} />
   </Provider>, document.getElementById('app'));
+window.jQuery = $;
