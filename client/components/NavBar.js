@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import AuthenticationActions from '../actions/loginActions';
+import { postQuestion } from '../actions/questionsActions'
 import { addFlashMessage } from '../actions/flashMessages';
 import LoginForm from './presentation/LoginForm';
+import { validate } from '../utils/helpers';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -11,18 +13,35 @@ class NavBar extends React.Component {
     this.state = {
       username: '',
       password: '',
+      questions: {
+        title: '',
+        content: ''
+      },
       errors: {},
       isLoading: false,
+      isOpen: false
     };
 
   this.onChange = this.onChange.bind(this);
   this.onSubmit = this.onSubmit.bind(this);
   this.logout = this.logout.bind(this);
+  this.onChange = this.onChange.bind(this);
+  this.onEdit = this.onEdit.bind(this);
+  this.postQuestion = this.postQuestion.bind(this);
+  this.clearError = this.clearError.bind(this);
   }
 
   onChange(event) {
+    const { questions } = this.state;
+    questions[event.target.name] = event.target.value;
     this.setState({
-      [event.target.name]: event.target.value 
+      questions
+    });
+  }
+
+  onEdit(event) {
+    this.setState({
+      [event.target.name]: event.target.value
     });
   }
 
@@ -52,8 +71,55 @@ class NavBar extends React.Component {
     browserHistory.push('/');
   }
 
+  toggleModal = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
+  postQuestion() {
+    event.preventDefault();
+    this.setState({
+      errors: {}
+    });
+    console.log(this.state.questions);
+    const { errors, isValid } = validate(this.state.questions);
+    if (!isValid) {
+      this.props.postQuestion(this.state.questions)
+      .then((result) => {
+          this.setState({
+            questions: {
+              title: '',
+              content: '',
+              access: ''
+            },
+            invalid: false
+          });
+        });
+    } else {
+      this.setState({
+        errors,
+        invalid: true
+      });
+    }
+  }
+  /**
+   * clearError - clears error when onFocus
+   * @param  {object} event the event handler
+   * @return {void} no returns or void
+   */
+  clearError() {
+    let errors = this.state.errors;
+    if (errors) {
+      errors = {};
+      const invalid = false;
+      this.setState({ errors, invalid });
+    }
+  }
+
   render() {
+    const { questions, errors } = this.state;
     return(
+      <div>
       <nav className="navbar navbar-expand-lg navbar-light my-nav">
         <img className="blocker-img" src="https://www.freelogoservices.com/api/main/images/1j+ojVVCOMkX9Wyrexe4hGe...0vSNuksWzBPO1T5vbjRI9At61X50x7c++Pw+KhkJ4FEDhRY=" />
         <a className="navbar-brand my-brand" href="/main">Blocka</a>
@@ -68,7 +134,7 @@ class NavBar extends React.Component {
               <div className="col-md-5">
                 <ul className="nav navbar-nav navbar-right">
                   <li className="hidden-xs">
-                    <a href="#" className="add-project" onClick={this.handleShowModal} data-toggle="modal" data-target="#add_project">
+                    <a href="#" className="add-project" data-toggle="modal" data-target="#myModal">
                       Ask a Question
                     </a>
                   </li> 
@@ -113,7 +179,7 @@ class NavBar extends React.Component {
             (
               <LoginForm
                 onSubmit={this.onSubmit}
-                onChange={this.onChange}
+                onChange={this.onEdit}
                 usernameValue={this.state.username}
                 passwordValue={this.state.password}
               />
@@ -121,6 +187,40 @@ class NavBar extends React.Component {
           }
         </div>
       </nav>
+      <div className="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="title">Ask Question</h5>
+            <button type="button" className="close" data-dismiss="modal"><span style={{ color: '#cc0000' }} aria-hidden="true">&times;</span><span className="sr-only">Close</span></button>
+          </div>
+          <div className="modal-body">
+          <div className="panel panel-default">
+              <div className="panel-body">
+                  <div className="row">
+                      <div className="col-md-12">
+                        <div className="form-group">
+                          <input onChange={this.onChange} value={questions.title} name="title" type="text" placeholder="Title of Question" />
+                          {errors.title && <span className="alert alert-danger">{errors.title}</span>}
+                          </div>
+                          <div className="form-group">
+                              <textarea onChange={this.onChange} value={questions.content} name="content" placeholder="Keywords" required></textarea>
+                              <br />
+                              {errors.content && <span className="alert alert-danger">{errors.content}</span>}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          </div>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" onClick={this.postQuestion} className="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
       );
     }
 }
@@ -140,8 +240,11 @@ const dispatchToProps = (dispatch) => {
     login: (data) => {
       return dispatch(AuthenticationActions.login(data));
     },
+    postQuestion: (data) => {
+      return dispatch(postQuestion(data));
+    },
     logout: () => {
-      dispatch(AuthenticationActions.logout());
+      return dispatch(AuthenticationActions.logout())
     }
   };
 };

@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "postgres",
+    "username": "andeladeveloper",
     "password": "password",
     "database": "blocker_db",
     "host": "127.0.0.1",

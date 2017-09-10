@@ -478,7 +478,7 @@ ul {
 }
 
 .tab-content .tab-pane {
-  padding: 70px 0;
+  padding: 0;
 }
 
 
@@ -838,7 +838,9 @@ header {
   width: 100%;
   color: #8492af;
 }
-
+.modal-content {
+  width: 600px;
+}
 .modal-body textarea {
   border: 1px solid #d4d9e3;
   font-size: 14px;
