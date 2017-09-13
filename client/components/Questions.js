@@ -1,7 +1,9 @@
 import React from 'react';
 import Modal from './Modal';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { getFirstLetter, getDate } from '../utils/helpers';
+import { fetchData } from '../actions/questionsActions';
 
 class Questions extends React.Component {
     constructor(props) {
@@ -9,7 +11,9 @@ class Questions extends React.Component {
     
         this.state = { isOpen: false };
       }
-    
+    componentWillMount() {
+        this.props.fetchQuestions();
+    }
       toggleModal = () => {
         this.setState({
           isOpen: !this.state.isOpen
@@ -19,7 +23,6 @@ class Questions extends React.Component {
       const {
           questions
       } = this.props;
-      console.log(questions);
     return (
     <div className="tab-content">
       <div className="tab-pane active" id="inbox">
@@ -30,15 +33,24 @@ class Questions extends React.Component {
                       <input type="search" placeholder="Search Questions" className="form-control mail-search" />
                       
                       <ul className="mail-list">
-                          {questions.map((question) => <li>
-                              <a href="">
-                                <span className="mail-sender">{question.title}</span>
-                                <span className="mail-subject">{getDate(question.createdAt)}</span>
-                                <span className="mail-message-preview">{question.content}</span>
-                            <hr/>
-                                <span className="mail-subject">0 Answer | 10 upvotes | 12 downvotes</span>
-                              </a>
-                          </li>)}
+                          {questions.questions && questions.questions.map((question) => <div className="media-body">
+                          <div className="media">
+                              <a id="profile-pix">{getFirstLetter(question.User.username)}</a>
+                                  <div className="media-body">
+                                    <Link to={"/threads/"+ question.id}><p className="title h5">{question.title}</p></Link>
+                                        {question.body}
+                                      <br />
+                                      <div className="stats">
+                                      <small className="text-muted">@{question.User.username} | {getDate(question.createdAt)}</small>
+                                      <a href="#" className="btn btn-default stat-item pull-right">
+                                        <i className="fa fa-comments icon"></i>  {question.Answers.length}
+                                     </a>
+                                    </div>
+                                      <hr />
+                                  </div>
+                              </div>
+                
+                          </div> )}
                       </ul>
                   </div>
               </div>
@@ -54,13 +66,13 @@ class Questions extends React.Component {
   }
 }
 const stateToProps = (state) => {
-    return {
+      return {
       questions: state.questions,
     };
   };
 const dispatchToProps = (dispatch) => {
     return {
-      fetch: (data) => {
+      fetchQuestions: (data) => {
         return dispatch(fetchData());
       }
     };

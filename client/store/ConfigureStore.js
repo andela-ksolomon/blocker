@@ -8,6 +8,7 @@ const ConfigureStore = (initialState => createStore(
          initialState,
          compose(
            applyMiddleware(thunk, reduxImmutableStateInvariant()),
-         window.devToolsExtension ? window.devToolsExtension() : f => f))
+         window.devToolsExtension ? window.devToolsExtension() : f => f)
+        )
      );
 export default ConfigureStore;

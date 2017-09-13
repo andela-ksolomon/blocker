@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import '../node_modules/jquery/dist/jquery';
 import { browserHistory } from 'react-router';
 import jwtDecode from 'jwt-decode';
 import './public/css/main.css';
@@ -22,4 +21,3 @@ if (localStorage.jwtToken) {
 render(<Provider store={store}>
     <Routes history={browserHistory} getState={store.getState} />
   </Provider>, document.getElementById('app'));
-window.jQuery = $;

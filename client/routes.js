@@ -18,7 +18,7 @@ export default class RTRouter extends React.Component {
           <IndexRoute component={Home} onEnter={ this.requireAuth } />
           <Route path="/home" component={Home} /> 
           <Route path="/main" component={requireAuth(Main)} />
-          <Route path="/threads" component={requireAuth(Threads)} />
+          <Route path="/threads/:id" component={requireAuth(Threads)} />
         </Route>
       )
     }

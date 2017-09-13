@@ -7,7 +7,7 @@ const LoginForm = ({
   return (
     <form
       onSubmit={onSubmit}
-      className="form-inline my-2 my-lg-0"
+      className="form-inline my-4 my-lg-0"
     >
       <input
         onChange={onChange}

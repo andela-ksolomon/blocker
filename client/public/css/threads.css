@@ -4,6 +4,7 @@
 
 .panel-white {
   border: 1px solid #dddddd;
+  padding: 20px;
 }
 
 .panel-white .panel-heading {
@@ -62,7 +63,8 @@
   float: right;
 }
 .panel-body, .media-body {
-  padding: 20px;
+  padding-left: 10px;
+  padding-top: 8px;
 }
 .post .post-image .image {
   width: 100%;

@@ -16,7 +16,7 @@ export const validate = (state) => {
     };
   };
   export const getFirstLetter = (word) => {
-    return word.split('')[0];
+    return word.split('')[0].toUpperCase();
   };
   
   export const getDate = (date) => {

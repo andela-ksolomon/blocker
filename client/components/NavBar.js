@@ -13,13 +13,14 @@ class NavBar extends React.Component {
     this.state = {
       username: '',
       password: '',
+      tags: [],
       questions: {
         title: '',
         content: ''
       },
       errors: {},
       isLoading: false,
-      isOpen: false
+      isOpen: true
     };
 
   this.onChange = this.onChange.bind(this);
@@ -29,6 +30,8 @@ class NavBar extends React.Component {
   this.onEdit = this.onEdit.bind(this);
   this.postQuestion = this.postQuestion.bind(this);
   this.clearError = this.clearError.bind(this);
+  this.removeTag = this.removeTag.bind(this);
+  this.addTag = this.addTag.bind(this);
   }
 
   onChange(event) {
@@ -78,10 +81,10 @@ class NavBar extends React.Component {
   }
   postQuestion() {
     event.preventDefault();
+    $('#myModal').hide('showw')
     this.setState({
-      errors: {}
+      errors: {},
     });
-    console.log(this.state.questions);
     const { errors, isValid } = validate(this.state.questions);
     if (!isValid) {
       this.props.postQuestion(this.state.questions)
@@ -116,8 +119,27 @@ class NavBar extends React.Component {
     }
   }
 
+  addTag(event) {
+    event.preventDefault();
+    const { tags } = this.state;
+    const tag = event.target[0].value;
+    tags.push(tag);
+    this.setState({
+      tags
+    });
+  }
+
+  removeTag(tag) {
+    const { tags } = this.state;
+    const index = tags.indexOf(tag);
+    tags.splice(index, 1);
+    this.setState({
+      tags
+    });
+  }
+
   render() {
-    const { questions, errors } = this.state;
+    const { questions, errors, tags, isOpen } = this.state;
     return(
       <div>
       <nav className="navbar navbar-expand-lg navbar-light my-nav">
@@ -207,6 +229,16 @@ class NavBar extends React.Component {
                               <textarea onChange={this.onChange} value={questions.content} name="content" placeholder="Keywords" required></textarea>
                               <br />
                               {errors.content && <span className="alert alert-danger">{errors.content}</span>}
+                          </div>
+                          <div className="">
+                            <form onSubmit={this.addTag}>
+                            <input type="text" placeholder="Add Tags" className="add-tag" />
+                            </form>
+                            <div className="display-tag" >
+                              {tags && tags.map((tag) => <span className="badge">
+                                  {tag} <a onClick={(tag) => this.removeTag(tag)}>x</a>
+                                </span>)}
+                            </div>
                           </div>
                       </div>
                   </div>

@@ -16,9 +16,7 @@ export default {
     const token = jwt.sign({
       user
     },
-      key, {
-        expiresIn: 4000
-      });
+      key);
     return token;
   },
     /**
@@ -72,6 +70,15 @@ export default {
           'fullname',
           'email',
           'points',
+        ]
+      },
+      {
+        model: db.Answer,
+        attributes: [
+          'id',
+          'content',
+          'questionId',
+          'UserId',
         ]
       }
     ];

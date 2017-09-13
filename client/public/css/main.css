@@ -11,7 +11,14 @@ body {
   background: url('https://images.unsplash.com/photo-1468070454955-c5b6932bd08d?dpr=2&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=');
 }
 
-
+#feeds {
+  padding: 10px;
+  background-color: #fafafa;
+}
+#feeds:hover {
+  background-color: #e7e5e5;
+  cursor: pointer;
+}
 a,
 button {
   cursor: pointer;
@@ -21,7 +28,7 @@ button {
 #login-btn {
   background-color: #f5922b;
   border-color: #ccc;
-  border-radius: 0px;
+  border-radius: 18px;
   font-size: 17px;
 }
 
@@ -29,16 +36,42 @@ button {
 #login-btn:hover {
   background-color: #355ed6;
   border-color: #ccc;
-  border-radius: 0px;
+  border-radius: 18px;
   font-size: 15px;
+}
+
+.badge {
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: #e76464;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-left: 2px;
 }
 
 #login-btn {
   color: #fff;
   font-size: 15px;
-  border-radius: 0px;
+  border-radius: 18px;
 }
-
+.add-tag {
+  width: 20% !important;
+  height: 40px;
+  border-radius: 20px;
+  outline: none;
+}
+.display-tag {
+  width: 80% !important;
+  height: 40px;
+}
 .my-nav {
   background-color: #355ed6 !important;
 }
@@ -200,8 +233,8 @@ textarea {
 /*Content Container*/
 
 .content-container {
-  background-color: #fff;
-  padding: 35px 20px;
+  background-color: #f6f8ff;
+  padding: 5px;
   margin-bottom: 20px;
 }
 
@@ -248,31 +281,44 @@ ul.mail-list li:last-child a {
 }
 
 ul.mail-list li a:hover {
-  background-color: #DBF9FF;
+  background-color: #FFEAC9;
 }
 
 ul.mail-list li span {
   display: block;
 }
-
-ul.mail-list li span.mail-sender {
-  font-weight: 600;
-  color: #8F8F8F;
+#profile-pix {
+  width: 40px;
+  height: 40px;
+  padding: 8px 0px;
+  border-radius: 25px;
+  text-align: center;
   font-size: 18px;
+  line-height: 1.42857;
+  background-color: #567def;
+  color: #fff;
+}
+.mail-sender {
+  color: #d76d00 !important;
+  font-size: 17px;
 }
 
 ul.mail-list li span.mail-subject {
-  color: #8C8C8C;
+  color: #8f8888;
   font-size: 13px;
 }
 
 ul.mail-list li span.mail-message-preview {
   display: block;
-  color: #A8A8A8;
+  color: #221e1e;
 }
 
 .mail-search {
   border-bottom-color: #7FBCC9!important;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  background-color: transparent;
 }
 
 .navbar-light .navbar-nav .active>.nav-link,
